@@ -63,6 +63,16 @@ def ratelimit(limit, per=300, send_x_headers=True, over_limit=on_over_limit,
         return update_wrapper(rate_limited, f)
     return decorator
 
+@app.after_request
+def inject_x_rate_headers(response):
+    limit = get_view_rate_limit()
+    if limit and limit.send_x_headers:
+        h = response.headers
+        h.add('X-RateLimit-Remaining', str(limit.remaining))
+        h.add('X-RateLimit-Limit', str(limit.limit))
+        h.add('X-RateLimit-Reset', str(limit.reset))
+    return response
+
 @app.route('/catalog')
 def getCatalog():
     items = session.query(Item).all()
