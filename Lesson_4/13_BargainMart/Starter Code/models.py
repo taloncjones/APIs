@@ -24,7 +24,7 @@ class Item(Base):
             }
 
 engine = create_engine('sqlite:///bargainMart.db')
- 
+
 
 Base.metadata.create_all(engine)
-    
+
