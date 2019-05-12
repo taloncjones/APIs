@@ -36,7 +36,7 @@ class User(Base):
             data = s.loads(token)
         except SignatureExpired:
             return None
-        except BadSignature
+        except BadSignature:
             return None
         user_id = data['id']
         return user_id
