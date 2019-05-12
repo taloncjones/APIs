@@ -16,7 +16,7 @@ foursquare_client_id = mysecrets.foursquare_client_id
 foursquare_client_secret = mysecrets.foursquare_client_secret
 
 
-engine = create_engine('sqlite:///restaurants.db')
+engine = create_engine('sqlite:///restaurants.db', connect_args={'check_same_thread': False})
 
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
@@ -26,10 +26,20 @@ app = Flask(__name__)
 @app.route('/restaurants', methods = ['GET', 'POST'])
 def all_restaurants_handler():
   #YOUR CODE HERE
-    
+    if request.method == 'GET':
+        restaurants = session.query(Restaurant).all()
+        return jsonify(restaurants = [i.serialize for i in restaurants])
+    elif request.method == 'POST':
+        location = request.args.get('location', '')
+        mealType = request.args.get('mealType', '')
+        restaurant = findARestaurant(mealType, location)
+        print restaurant
+        return jsonify(restaurant)
+
 @app.route('/restaurants/<int:id>', methods = ['GET','PUT', 'DELETE'])
 def restaurant_handler(id):
   #YOUR CODE HERE
+    return
 
 if __name__ == '__main__':
     app.debug = True
