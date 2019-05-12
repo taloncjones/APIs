@@ -29,6 +29,7 @@ class User(Base):
         return s.dumps({'id':self.id})
 
     #Add a method to verify auth tokens here
+    @staticmethod
     def verify_auth_token(token):
         s = Serializer(secret_key)
         try:
