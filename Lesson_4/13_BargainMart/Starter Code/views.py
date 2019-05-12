@@ -12,7 +12,7 @@ from sqlalchemy import create_engine
 
 import json
 
-engine = create_engine('sqlite:///bargainMart.db')
+engine = create_engine('sqlite:///bargainMart.db', connect_args={'check_same_thread':False})
 
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
