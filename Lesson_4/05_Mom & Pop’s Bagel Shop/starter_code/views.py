@@ -8,7 +8,7 @@ from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
 
 
-engine = create_engine('sqlite:///bagelShop.db')
+engine = create_engine('sqlite:///bagelShop.db', connect_args={'check_same_thread':False})
 
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
@@ -16,6 +16,18 @@ session = DBSession()
 app = Flask(__name__)
 
 #ADD @auth.verify_password here
+@auth.verify_password
+def verify_password(username, password):
+    user = session.query(User).filter_by(username = username).first()
+    if not user:
+        print "User not found"
+        return False
+    elif not user.verify_password(password):
+        print "Unable to verify"
+        return False
+    else:
+        g.user = user
+        return True
 
 #ADD a /users route here
 @app.route('/users', methods = ['POST'])
