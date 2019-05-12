@@ -25,7 +25,7 @@ def verify_password(username_or_token, password):
     if user_id:
         user = session.query(User).filter_by(id = user_id).one()
     else:
-        user = session.query(User).filter_by(username = username_or_token).one()
+        user = session.query(User).filter_by(username = username_or_token).first()
         if not user or not user.verify_password(password):
             return False
     g.user = user
