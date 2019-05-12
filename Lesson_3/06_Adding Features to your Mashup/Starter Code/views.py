@@ -47,7 +47,20 @@ def restaurant_handler(id):
     restaurant = session.query(Restaurant).filter_by(id = id).one()
     if request.method == 'GET':
         return jsonify(restaurant = restaurant.serialize)
-    return
+    elif request.method == 'PUT':
+        name = request.args.get('name')
+        address = request.args.get('address')
+        image = request.args.get('image')
+        if name:
+            restaurant.restaurant_name = name
+        if address:
+            restaurant.restaurant_address = address
+        if image:
+            restaurant.restaurant_image = image
+        session.commit()
+        return jsonify(restaurant = restaurant.serialize)
+    else:
+        return
 
 if __name__ == '__main__':
     app.debug = True
