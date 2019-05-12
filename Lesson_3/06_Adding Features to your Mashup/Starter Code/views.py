@@ -10,14 +10,11 @@ import codecs
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
+import mysecrets
+google_api_key = mysecrets.google_api_key
+foursquare_client_id = mysecrets.foursquare_client_id
+foursquare_client_secret = mysecrets.foursquare_client_secret
 
-
-
-#foursquare_client_id = ''
-
-#foursquare_client_secret = ''
-
-#google_api_key = ''
 
 engine = create_engine('sqlite:///restaurants.db')
 
