@@ -44,6 +44,9 @@ def all_restaurants_handler():
 @app.route('/restaurants/<int:id>', methods = ['GET','PUT', 'DELETE'])
 def restaurant_handler(id):
   #YOUR CODE HERE
+    restaurant = session.query(Restaurant).filter_by(id = id).one()
+    if request.method == 'GET':
+        return jsonify(restaurant = restaurant.serialize)
     return
 
 if __name__ == '__main__':
