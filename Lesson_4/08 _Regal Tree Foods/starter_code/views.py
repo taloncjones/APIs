@@ -8,7 +8,7 @@ from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
 
 
-engine = create_engine('sqlite:///regalTree.db')
+engine = create_engine('sqlite:///regalTree.db', connect_args={'check_same_thread':False})
 
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
