@@ -32,13 +32,13 @@ def new_user():
     password = request.json.get('password')
     if username is None or password is None:
         print "missing arguments"
-        abort(400) 
-        
+        abort(400)
+
     if session.query(User).filter_by(username = username).first() is not None:
         print "existing user"
         user = session.query(User).filter_by(username=username).first()
         return jsonify({'message':'user already exists'}), 200#, {'Location': url_for('get_user', id = user.id, _external = True)}
-        
+
     user = User(username = username)
     user.hash_password(password)
     session.add(user)
@@ -86,7 +86,7 @@ def showCategoriedProducts(category):
     if category == 'vegetable':
         vegetable_items = session.query(Product).filter_by(category = 'vegetable').all()
         return jsonify(produce_products = [p.serialize for p in produce_items])
-    
+
 
 
 if __name__ == '__main__':
