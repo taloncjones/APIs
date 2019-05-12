@@ -32,9 +32,14 @@ def all_restaurants_handler():
     elif request.method == 'POST':
         location = request.args.get('location', '')
         mealType = request.args.get('mealType', '')
-        restaurant = findARestaurant(mealType, location)
-        print restaurant
-        return jsonify(restaurant)
+        restaurant_info = findARestaurant(mealType, location)
+        if restaurant_info != "No Restaurants Found":
+            restaurant = Restaurant(restaurant_name = unicode(restaurant_info['name']), restaurant_address = unicode(restaurant_info['address']), restaurant_image = restaurant_info['image'])
+            session.add(restaurant)
+            session.commit()
+            return jsonify(restaurant = restaurant.serialize)
+        else:
+            return jsonify({"error":"No Restaurants Found for %s in %s" % (mealType, location)})
 
 @app.route('/restaurants/<int:id>', methods = ['GET','PUT', 'DELETE'])
 def restaurant_handler(id):
