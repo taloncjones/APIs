@@ -31,7 +31,7 @@ class RateLimit(object):
 
     def __init__(self, key_prefix, limit, per, send_x_headers):
         self.reset = (int(time.time()) // per) * per + per
-        self.key - key_prefix + str(self.reset)
+        self.key = key_prefix + str(self.reset)
         self.limit = limit
         self.per = per
         self.send_x_headers = send_x_headers
