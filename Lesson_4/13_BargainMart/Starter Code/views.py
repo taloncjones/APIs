@@ -74,6 +74,7 @@ def inject_x_rate_headers(response):
     return response
 
 @app.route('/catalog')
+@ratelimit(limit=30, per=60*1)
 def getCatalog():
     items = session.query(Item).all()
 
