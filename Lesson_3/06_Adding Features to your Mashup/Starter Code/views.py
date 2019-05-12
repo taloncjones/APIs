@@ -59,12 +59,12 @@ def restaurant_handler(id):
             restaurant.restaurant_image = image
         session.commit()
         return jsonify(restaurant = restaurant.serialize)
-    else:
-        return
+    elif request.method == 'DELETE':
+        session.delete(restaurant)
+        session.commit()
+        return "Restaurant deleted"
 
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
 
-
-  
