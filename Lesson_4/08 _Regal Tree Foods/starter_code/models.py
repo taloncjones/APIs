@@ -56,7 +56,7 @@ class Product(Base):
             }
 
 engine = create_engine('sqlite:///regalTree.db')
- 
+
 
 Base.metadata.create_all(engine)
-    
+
